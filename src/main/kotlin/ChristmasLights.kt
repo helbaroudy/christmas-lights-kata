@@ -25,6 +25,15 @@ class ChristmasLights {
         }
     }
 
+    fun printm() {
+        for (i in 0 until lights.size) {
+            for (j in 0 until lights.size) {
+                print(lights[i][j])
+            }
+            println()
+        }
+
+    }
 }
 
 private fun Int.switch(): Int =

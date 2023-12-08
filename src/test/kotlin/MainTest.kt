@@ -78,4 +78,21 @@ class MainTest {
         assertEquals(0, actual[0][0])
         assertEquals(1, actual.sumOf { row -> row.count { column -> column == 0 } })
     }
+
+    @Test
+    fun `a`(){
+        val christmasLights = ChristmasLights()
+        christmasLights.turnOn(887, 9, 959, 629)
+        christmasLights.turnOn(454, 398, 844, 448)
+        christmasLights.turnOff(539, 243, 559, 965)
+        christmasLights.turnOff(370, 819, 676, 868)
+        christmasLights.turnOff(145, 40, 370, 997)
+        christmasLights.turnOff(301, 3, 808, 453)
+        christmasLights.turnOn(351, 678, 951, 908)
+        christmasLights.switch(720, 196, 897, 994)
+        christmasLights.switch(831, 394, 904, 860)
+
+        assertEquals(228698, christmasLights.lights.sumOf { row -> row.count { column -> column == 1 } })
+
+    }
 }
