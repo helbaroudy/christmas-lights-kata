@@ -20,7 +20,19 @@ class ChristmasLights {
             }
         }
     }
+
+    fun switch(fromX: Int, fromY: Int, toX: Int, toY: Int) {
+        for (i in fromX until toX) {
+            for (j in fromY until toY) {
+                lights[i][j] = lights[i][j].switch()
+            }
+        }
+    }
 }
+
+private fun Int.switch(): Int =
+    if (this == 0) 1
+    else 0
 
 
 
