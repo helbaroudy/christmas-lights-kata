@@ -3,12 +3,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
-const val WIDTH = 10
-const val HEIGHT = 10
-private operator fun Any.rangeTo(i: Int) {
-    TODO("Not yet implemented")
-}
-
 class MainTest {
     @Test
     fun `christmasLights should init a lights grid off`() {
