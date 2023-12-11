@@ -1,6 +1,8 @@
 import org.example.ChristmasLights
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 
 class MainTest {
@@ -16,7 +18,7 @@ class MainTest {
     @Test
     fun `turn on single light should update the grid accordingly`() {
         val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 1, 1)
+        christmasLights.turnOn(0, 0, 0, 0)
         val actual = christmasLights.lights
 
         assertEquals(1, actual[0][0])
@@ -26,8 +28,8 @@ class MainTest {
     @Test
     fun `turn on single light twice should increase the brightness`() {
         val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 1, 1)
-        christmasLights.turnOn(0, 0, 1, 1)
+        christmasLights.turnOn(0, 0, 0, 0)
+        christmasLights.turnOn(0, 0, 0, 0)
         val actual = christmasLights.lights
 
         assertEquals(2, actual[0][0])
@@ -38,7 +40,7 @@ class MainTest {
     fun `turn on all lights should update the whole grid`() {
         val christmasLights = ChristmasLights()
 
-        christmasLights.turnOn(0, 0, 1000, 1000)
+        christmasLights.turnOn(0, 0, 999, 999)
         val actual = christmasLights.lights
 
         assertEquals(List(1000) { List(1000) { 1 } }, actual)
@@ -47,9 +49,9 @@ class MainTest {
     @Test
     fun `turn off single light should update the grid accordingly`() {
         val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 1000, 1000)
+        christmasLights.turnOn(0, 0, 999, 999)
 
-        christmasLights.turnOff(0, 0, 1, 1)
+        christmasLights.turnOff(0, 0, 0, 0)
         val actual = christmasLights.lights
 
         assertEquals(0, actual[0][0])
@@ -60,9 +62,9 @@ class MainTest {
     fun `turn off should decrease brightness by 1`() {
         val christmasLights = ChristmasLights()
 
-        christmasLights.turnOn(0, 0, 1, 1)
-        christmasLights.turnOn(0, 0, 1, 1)
-        christmasLights.turnOff(0, 0, 1, 1)
+        christmasLights.turnOn(0, 0, 0, 0)
+        christmasLights.turnOn(0, 0, 0, 0)
+        christmasLights.turnOff(0, 0, 0, 0)
         val actual = christmasLights.lights
 
         assertEquals(1, actual[0][0])
@@ -74,8 +76,8 @@ class MainTest {
         val christmasLights = ChristmasLights()
 
 
-        christmasLights.turnOff(0, 0, 1, 1)
-        christmasLights.turnOff(0, 0, 1, 1)
+        christmasLights.turnOff(0, 0, 0, 0)
+        christmasLights.turnOff(0, 0, 0, 0)
         val actual = christmasLights.lights
 
         assertEquals(0, actual[0][0])
@@ -86,39 +88,33 @@ class MainTest {
     @Test
     fun `turning on and off should go back to initial state`() {
         val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 1000, 1000)
-        christmasLights.turnOff(0, 0, 1000, 1000)
+        christmasLights.turnOn(0, 0, 999, 999)
+        christmasLights.turnOff(0, 0, 999, 999)
 
         val actual = christmasLights.lights
 
         assertEquals(ChristmasLights().lights, actual)
     }
 
-    @Test
-    fun `toggle an off light should switch it on`() {
+
+    @ParameterizedTest
+    @ValueSource(ints = [0, 1, 100])
+    fun `toggle a light should increase its brightness by 2`(brightness: Int) {
         val christmasLights = ChristmasLights()
-        christmasLights.toggle(0, 0, 1, 1)
-        val actual = christmasLights.lights
-
-        assertEquals(1, actual[0][0])
-        assertEquals(1, actual.sumOf { row -> row.count { column -> column == 1 } })
-
-    }
-
-    @Test
-    fun `toggle an on light should switch it off`() {
-        val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 1000, 1000)
-        christmasLights.toggle(0, 0, 1, 1)
+        for (i in 0..brightness) {
+            christmasLights.turnOn(0, 0, 0, 0)
+        }
+        val beforeBrightness = christmasLights.lights[0][0]
+        christmasLights.toggle(0, 0, 0, 0)
 
         val actual = christmasLights.lights
 
-        assertEquals(0, actual[0][0])
-        assertEquals(1, actual.sumOf { row -> row.count { column -> column == 0 } })
+        assertEquals(beforeBrightness + 2, actual[0][0])
+        assertEquals(1, actual.sumOf { row -> row.count { column -> column == beforeBrightness + 2 } })
     }
 
     @Test
-    fun `a`(){
+    fun `a`() {
         val christmasLights = ChristmasLights()
         christmasLights.turnOn(887, 9, 959, 629)
         christmasLights.turnOn(454, 398, 844, 448)
