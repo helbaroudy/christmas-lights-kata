@@ -24,6 +24,17 @@ class MainTest {
     }
 
     @Test
+    fun `turn on single light twice should increase the brightness`() {
+        val christmasLights = ChristmasLights()
+        christmasLights.turnOn(0, 0, 1, 1)
+        christmasLights.turnOn(0, 0, 1, 1)
+        val actual = christmasLights.lights
+
+        assertEquals(2, actual[0][0])
+        assertEquals(1, actual.sumOf { row -> row.count { column -> column == 2 } })
+    }
+
+    @Test
     fun `turn on all lights should update the whole grid`() {
         val christmasLights = ChristmasLights()
 
@@ -44,6 +55,33 @@ class MainTest {
         assertEquals(0, actual[0][0])
         assertEquals(1, actual.sumOf { row -> row.count { column -> column == 0 } })
     }
+
+    @Test
+    fun `turn off should decrease brightness by 1`() {
+        val christmasLights = ChristmasLights()
+
+        christmasLights.turnOn(0, 0, 1, 1)
+        christmasLights.turnOn(0, 0, 1, 1)
+        christmasLights.turnOff(0, 0, 1, 1)
+        val actual = christmasLights.lights
+
+        assertEquals(1, actual[0][0])
+        assertEquals(1, actual.sumOf { row -> row.count { column -> column == 1 } })
+    }
+
+    @Test
+    fun `turn off should never lower brightness below 0`() {
+        val christmasLights = ChristmasLights()
+
+
+        christmasLights.turnOff(0, 0, 1, 1)
+        christmasLights.turnOff(0, 0, 1, 1)
+        val actual = christmasLights.lights
+
+        assertEquals(0, actual[0][0])
+        assertEquals(1000000, actual.sumOf { row -> row.count { column -> column == 0 } })
+    }
+
 
     @Test
     fun `turning on and off should go back to initial state`() {
@@ -92,7 +130,7 @@ class MainTest {
         christmasLights.switch(720, 196, 897, 994)
         christmasLights.switch(831, 394, 904, 860)
 
-        assertEquals(228698, christmasLights.lights.sumOf { row -> row.count { column -> column == 1 } })
+        //assertEquals(228698, christmasLights.lights.sumOf { row -> row.count { column -> column == 1 } })
 
     }
 }
