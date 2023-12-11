@@ -15,8 +15,8 @@ class ChristmasLights {
         setValue(fromX, toX, fromY, toY) { i, j -> max(0, lights[i][j] - 1) }
     }
 
-    fun switch(fromX: Int, fromY: Int, toX: Int, toY: Int) {
-        setValue(fromX, toX, fromY, toY) { i, j -> lights[i][j].switch() }
+    fun toggle(fromX: Int, fromY: Int, toX: Int, toY: Int) {
+        setValue(fromX, toX, fromY, toY) { i, j -> lights[i][j].toggle() }
     }
 
     private fun setValue(fromX: Int, toX: Int, fromY: Int, toY: Int, value: (Int, Int) -> Int) {
@@ -38,7 +38,7 @@ class ChristmasLights {
     }
 }
 
-private fun Int.switch(): Int =
+private fun Int.toggle(): Int =
     if (this == 0) 1
     else 0
 

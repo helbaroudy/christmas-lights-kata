@@ -97,7 +97,7 @@ class MainTest {
     @Test
     fun `toggle an off light should switch it on`() {
         val christmasLights = ChristmasLights()
-        christmasLights.switch(0, 0, 1, 1)
+        christmasLights.toggle(0, 0, 1, 1)
         val actual = christmasLights.lights
 
         assertEquals(1, actual[0][0])
@@ -109,7 +109,7 @@ class MainTest {
     fun `toggle an on light should switch it off`() {
         val christmasLights = ChristmasLights()
         christmasLights.turnOn(0, 0, 1000, 1000)
-        christmasLights.switch(0, 0, 1, 1)
+        christmasLights.toggle(0, 0, 1, 1)
 
         val actual = christmasLights.lights
 
@@ -127,8 +127,8 @@ class MainTest {
         christmasLights.turnOff(145, 40, 370, 997)
         christmasLights.turnOff(301, 3, 808, 453)
         christmasLights.turnOn(351, 678, 951, 908)
-        christmasLights.switch(720, 196, 897, 994)
-        christmasLights.switch(831, 394, 904, 860)
+        christmasLights.toggle(720, 196, 897, 994)
+        christmasLights.toggle(831, 394, 904, 860)
 
         //assertEquals(228698, christmasLights.lights.sumOf { row -> row.count { column -> column == 1 } })
 
