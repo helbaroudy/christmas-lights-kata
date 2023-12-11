@@ -1,4 +1,5 @@
 import org.example.ChristmasLights
+import org.example.LightRange
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -28,7 +29,7 @@ class MainTest {
     @Test
     fun `turn on single light twice should increase the brightness`() {
         val christmasLights = ChristmasLights()
-        christmasLights.turnOn(0, 0, 0, 0)
+        christmasLights turnOn LightRange(0, 0, 0, 0)
         christmasLights.turnOn(0, 0, 0, 0)
         val actual = christmasLights.lights
 
@@ -96,6 +97,28 @@ class MainTest {
         assertEquals(ChristmasLights().lights, actual)
     }
 
+
+    @Test
+    fun `turn on 0,0 through 0,0 would increase the total brightness by 1`() {
+        val christmasLights = ChristmasLights()
+        christmasLights.turnOn(0, 0, 0, 0)
+
+        val actual = christmasLights.brightness()
+
+        assertEquals(1, actual)
+
+    }
+
+    @Test
+    fun `toggle 0,0 through 999,999 would increase the total brightness by 2000000`() {
+        val christmasLights = ChristmasLights()
+        christmasLights.toggle(0, 0, 999, 999)
+
+        val actual = christmasLights.brightness()
+
+        assertEquals(2000000, actual)
+
+    }
 
     @ParameterizedTest
     @ValueSource(ints = [0, 1, 100])
